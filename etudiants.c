@@ -3,7 +3,15 @@
 #include <string.h>
 #include "et.h"
 int compare(const void *a,const void *b){
-	return strcmp(((const etudiants*)a)->nom,((const etudiants*)b)->nom);
+	etudiants* f=(etudiants*)a;
+	etudiants* s=(etudiants*)b;
+	int comparaison=strcmp(f->nom,s->nom);
+	if (comparaison==0){
+		return strcmp(f->prenom,s->prenom);
+		}
+	else{
+		return comparaison;
+		}
 	}
 int main(){
 	etudiants* mit=malloc(100*sizeof(etudiants));
@@ -14,7 +22,7 @@ int main(){
 	}
 	char row[256];int len;
 	for(len=0; fgets(row, sizeof(row), file); len++){
-		sscanf(row,"%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",mit[len].nom,mit[len].prenom,mit[len].numero,mit[len].tel,mit[len].email,mit[len].adresse,mit[len].datenaiss,mit[len].lieu,mit[len].bacc,mit[len].genre,mit[len].cin,mit[len].URL);
+		sscanf(row,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%s\n",mit[len].nom,mit[len].prenom,mit[len].numero,mit[len].tel,mit[len].email,mit[len].adresse,mit[len].datenaiss,mit[len].lieu,mit[len].bacc,mit[len].genre,mit[len].cin,mit[len].URL);
 	}
 	
 	qsort(mit, len,sizeof(etudiants),compare);
